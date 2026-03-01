@@ -1,6 +1,15 @@
 FROM php:8.2-apache
 
-RUN docker-php-ext-install mysqli mbstring
+RUN apt-get update && apt-get install -y \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    default-mysql-client \
+    git \
+    unzip \
+    && docker-php-ext-install mysqli mbstring \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
 
 COPY . /var/www/html/
 
